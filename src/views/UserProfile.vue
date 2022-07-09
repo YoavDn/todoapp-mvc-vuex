@@ -12,9 +12,8 @@ const { state } = useStore()
 let prefsOpen = ref(false)
 let openList = ref(false)
 
-const userTodos = computed(() => {
-    return state.todos.filter(todo => todo.createdBy === route.params.username)
-})
+const userTodos = computed(() => state.todos.filter(todo => todo.createdBy === route.params.username)
+)
 
 
 const userPrefs = reactive({
@@ -27,8 +26,6 @@ const setUserPrefs = () => store.commit('setUserPrefs', userPrefs)
 function timeSince(date) {
     return utilService.timeSince(date)
 }
-
-
 </script>
 
 
