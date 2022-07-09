@@ -72,6 +72,7 @@ function _createTodo(txt) {
     return {
         _id: utilService.makeId(),
         txt,
-        done: false
+        done: false,
+        createdBy: 'guest'
     }
 }
