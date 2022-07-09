@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
+const { todoId } = route.params
+const txt = ref('')
 
-function addTodo(e) {
-    console.log(e.target.value);
-    const text = e.target.value
-    store.commit('addTodo', text)
+function addTodo() {
+    store.commit('addTodo', { txt, todoId })
     router.push('/todo')
-    e.target.value = ''
+    txt.value = ''
 }
 
 </script>
@@ -19,12 +20,14 @@ function addTodo(e) {
 
 <template>
     <router-link to="/todo">&leftarrow; Back</router-link>
-    <div>
-        <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?"
+    <section>
+        <form @submit.prevent="addTodo"></form>
+        <input v-model="txt" class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?"
             @keyup.enter="addTodo">
-    </div>
+        <button @click="addTodo" v-if="route.params.todoId">Update Todo</button>
+        <button @click="addTodo" v-else>Add Todo</button>
+    </section>
 </template>
-
 
 
 

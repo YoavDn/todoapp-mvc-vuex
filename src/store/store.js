@@ -21,10 +21,13 @@ const store = createStore({
             state.filterBy = filter
         },
 
-        addTodo(state, txt) {
-            const todo = { txt, done: false }
-            const savedTodo = todoService.save(todo)
-            state.todos.push(savedTodo)
+        addTodo(state, { txt, todoId }) {
+            let todo = todoService.getById(todoId)
+            if (todo) todo.txt = txt.value
+            else todo = { txt: txt.value, createdBy: state.user.username, done: false }
+            todoService.save(todo)
+            state.todos = todoService.query()
+
         },
         removeTodo(state, { _id }) {
             todoService.remove(_id)

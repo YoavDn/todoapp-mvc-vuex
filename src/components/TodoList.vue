@@ -14,6 +14,7 @@ const props = defineProps(['todos'])
             <input name="check" type="checkbox" v-model="todo.done" @change="$emit('toggleTodo', todo)">
             <todo-preview :todo="todo" />
             <button @click="$emit('removeTodo', todo)" class="remove-todo-btn">X</button>
+            <router-link class="details" :to="'/todo/edit/' + todo._id">Edit</router-link>
         </div>
     </div>
 
@@ -34,6 +35,7 @@ const props = defineProps(['todos'])
 .todo-item {
     position: relative;
     display: flex;
+    align-items: center;
     border-bottom: solid black 1px;
 }
 
@@ -58,6 +60,12 @@ input[type="checkbox"] {
     text-align: center;
     margin-block: 1rem;
 
+
+}
+
+.details {
+    color: black;
+    margin-inline: 1rem;
 
 }
 </style>
