@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import todo from '../views/TodoApp.vue'
 import TodoEdit from '../views/TodoEdit.vue'
 import TodoDetails from '../views/TodoDetails.vue'
+import UserProfile from '../views/UserProfile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/todo/details',
       name: 'details',
       component: TodoDetails,
+    },
+    {
+      path: '/user/:username',
+      name: 'profile',
+      component: UserProfile,
     }
   ]
 })

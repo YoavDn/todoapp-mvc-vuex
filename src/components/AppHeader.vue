@@ -1,6 +1,20 @@
+<script setup >
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex';
+const store = useStore()
+const router = useRouter()
+const user = store.state.user
+
+const toUserProfile = () => {
+    router.push(`/user/${user.username}`)
+}
+
+</script>
+
 <template>
     <header class="app-header">
-        <h2 class="logo">Todo</h2>
+        <h2 class="logo">Todo <span v-if="user" class="username" @click="toUserProfile">-{{ user.username }}</span>
+        </h2>
         <nav class="header-nav">
             <router-link to="/">Home</router-link>
             <router-link to="/about">About</router-link>
@@ -23,9 +37,9 @@
 }
 
 .header-nav {
-    margin-inline-end: 1rem;
+    margin-inline-end: 2rem;
     display: flex;
-    flex-basis: 30%;
+    flex-basis: 200px;
     align-items: center;
     justify-content: space-between;
 }
@@ -33,5 +47,10 @@
 a {
     color: white;
     text-decoration: none;
+}
+
+.username {
+    font-weight: 200;
+    cursor: pointer;
 }
 </style>

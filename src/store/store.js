@@ -1,10 +1,12 @@
 import { createStore } from 'vuex'
 import { todoService } from '../services/todos.service'
+import { userService } from '../services/user.service'
 import { utilService } from '../services/utils.service'
 
 const store = createStore({
     state() {
         return {
+            user: userService.query(),
             todos: todoService.query(),
             filterBy: {
                 query: '',
@@ -31,6 +33,15 @@ const store = createStore({
         toggleTodo(state, todo) {
             todoService.save(todo)
             state.todos = todoService.query()
+        },
+        addUser(state, user) {
+            console.log(user);
+            state.user = userService.validateUser(user)
+        }
+    },
+    getters: {
+        getUser(state) {
+            return state.user
         }
     }
 })

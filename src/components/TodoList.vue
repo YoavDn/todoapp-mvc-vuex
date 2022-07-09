@@ -2,7 +2,6 @@
 import TodoPreview from './TodoPreview.vue';
 defineEmits(['removeTodo', 'toggleTodo'])
 const props = defineProps(['todos'])
-
 </script>
 
 <template>
