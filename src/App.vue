@@ -1,5 +1,6 @@
 <script setup>
 import AppHeader from './components/AppHeader.vue';
+import { useStore } from 'vuex';
 import { RouterLink, RouterView } from 'vue-router'
 
 </script>
@@ -16,6 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 #app {

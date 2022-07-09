@@ -30,7 +30,7 @@ const router = createRouter({
       component: TodoEdit,
     },
     {
-      path: '/todo/details',
+      path: '/todo/details/:todoId',
       name: 'details',
       component: TodoDetails,
     },

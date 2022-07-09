@@ -15,6 +15,8 @@ const props = defineProps(['todos'])
             <todo-preview :todo="todo" />
             <button @click="$emit('removeTodo', todo)" class="remove-todo-btn">X</button>
             <router-link class="details" :to="'/todo/edit/' + todo._id">Edit</router-link>
+            <router-link class="details" :to="'/todo/details/' + todo._id">Deatils</router-link>
+
         </div>
     </div>
 

@@ -38,15 +38,15 @@ const store = createStore({
             state.todos = todoService.query()
         },
         addUser(state, user) {
-            console.log(user);
+            console.log(user)
             state.user = userService.validateUser(user)
+        },
+        setUserPrefs(state, userPrefs) {
+            console.log(userPrefs)
+            userService.updateUserFrefs(userPrefs)
+            state.user = userService.query()
         }
     },
-    getters: {
-        getUser(state) {
-            return state.user
-        }
-    }
 })
 
 export default store

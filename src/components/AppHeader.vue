@@ -12,8 +12,9 @@ const toUserProfile = () => {
 </script>
 
 <template>
-    <header class="app-header">
-        <h2 class="logo">Todo <span v-if="user" class="username" @click="toUserProfile">-{{ user.username }}</span>
+    <header :style="{ 'background-color': store.state.user.prefs.bgColor }" class="app-header">
+        <h2 :style="{ color: store.state.user.prefs.color }" class="logo">Todo <span v-if="user" class="username"
+                @click="toUserProfile">-{{ user.username }}</span>
         </h2>
         <nav class="header-nav">
             <router-link to="/">Home</router-link>

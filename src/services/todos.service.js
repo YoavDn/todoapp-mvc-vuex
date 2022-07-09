@@ -41,6 +41,7 @@ function save(todo) {
 
 function _add(todo) {
     todo._id = utilService.makeId()
+    todo.createdAt = Date.now()
     gTodos.push(todo)
     return todo
 }

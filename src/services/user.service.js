@@ -7,6 +7,7 @@ const USERS_KEY = 'USERS'
 export const userService = {
     put,
     query,
+    updateUserFrefs,
     validateUser
 }
 
@@ -31,6 +32,11 @@ function put(username) {
     user.username = username
     storageService.store(KEY, user)
     return user
+}
+
+function updateUserFrefs(userPrefs) {
+    gUser.prefs = userPrefs
+    storageService.store(KEY, gUser)
 }
 
 
