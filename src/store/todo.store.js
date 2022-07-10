@@ -5,34 +5,33 @@ import { userStore } from './user.store';
 
 export const todoStore = {
     state: {
-        todos: todoService.query(),
+        todos: [],
         filterBy: {
             query: '',
             filter: 'all'
         }
     },
     mutations: {
+        setTodos(state, { todos }) {
+            state.todos = todos
+        },
+
         setFilter(state, { filter, query }) {
             state.filterBy.filter = filter
             state.filterBy.query = query
         },
 
-        toggleTodo(state, todo) {
-            todo.done = !todo.done
-            todoService.save(todo)
-            state.todo = todoService.query()
+        setToggle(state, { todo }) {
+            // state.todos = todos
+            const idx = state.todos.findIndex(currTodo => currTodo._id === todo._id)
+            state.todos.splice(idx, 1, todo)
         },
-        addTodo(state, { txt, todoId }) {
-            let todo = todoService.getById(todoId)
-            if (todo) todo.txt = txt.value
-            else todo = { txt: txt.value, createdBy: userStore.state.user.username, done: false }
-            todoService.save(todo)
-            state.todos = todoService.query()
-
+        saveTodo(state, { todos }) {
+            state.todos = todos
         },
-        removeTodo(state, { _id }) {
-            todoService.remove(_id)
-            state.todos = todoService.query()
+        setRemoved(state, todo) {
+            const idx = state.todos.findIndex(currTodo => currTodo._id === todo._id)
+            state.todos.splice(idx, 1)
         },
     },
     getters: {
@@ -42,5 +41,38 @@ export const todoStore = {
         getFilterBy({ filterBy }) {
             return filterBy
         }
+    },
+    actions: {
+        loadTodos({ commit }) {
+            return todoService.query()
+                .then(todos => {
+                    commit({ type: 'setTodos', todos })
+                    return todos
+                })
+
+        },
+
+        removeTodo({ commit }, { todo }) {
+            console.log(todo);
+            return todoService.remove(todo)
+                .then((todos) => commit({ type: 'setRemoved', todos }))
+        },
+
+        addTodo({ commit }, { txt, todoId }) {
+            const todo = { txt: txt.value, _id: todoId, done: false }
+            return todoService.save(todo)
+                .then(todos => {
+                    commit({ type: 'saveTodo', todos })
+                })
+        },
+        toggleTodo({ commit }, { todo }) {
+            console.log(todo);
+            const newTodo = { ...todo }
+            newTodo.done = !newTodo.done
+
+            return todoService.toggleDone(newTodo)
+                .then(todo => commit({ type: 'setToggle', todo }))
+
+        },
     }
 }

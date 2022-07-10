@@ -1,18 +1,22 @@
 <script setup>
+import { useToast } from "vue-toastification";
 import { ref } from 'vue'
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router'
 const store = useStore()
 const router = useRouter()
 const route = useRoute()
-
+const toast = useToast()
 const { todoId } = route.params
 const txt = ref('')
 
+
+
 function addTodo() {
-    store.commit('addTodo', { txt, todoId })
+    store.dispatch('addTodo', { txt, todoId })
     router.push('/todo')
     txt.value = ''
+    toast.success('added Todo succsefullly', { timeout: 1000 })
 }
 
 </script>

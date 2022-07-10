@@ -1,3 +1,4 @@
+import { asyncService } from './async-storage.service.js'
 import { storageService } from './storage.service.js'
 import { utilService } from './utils.service.js'
 
@@ -10,46 +11,34 @@ export const todoService = {
     remove,
     save,
     getEmptyTodo,
+    toggleDone
 }
 
 var gTodos = _createTodos()
 
-// TODO: support paging and filtering and sorting
 function query() {
-    const todos = JSON.parse(JSON.stringify(gTodos))
-    return todos
+    // const todos = JSON.parse(JSON.stringify(gTodos))
+    return asyncService.query(KEY)
 }
 
 function getById(id) {
     return gTodos.find(todo => todo._id === id)
 }
 
-function remove(id) {
-    const idx = gTodos.findIndex(todo => todo._id === id)
-    gTodos.splice(idx, 1)
-    storageService.store(KEY, gTodos)
+function remove(todo) {
+    // const idx = gTodos.findIndex(todo => todo._id === id)
+    // gTodos.splice(idx, 1)
+    return asyncService.remove(KEY, todo._id)
+
 }
 
 function save(todo) {
-    const TodoToSave = JSON.parse(JSON.stringify(todo))
-    const savedTodo = (TodoToSave._id) ? _update(TodoToSave) : _add(TodoToSave)
-
-    storageService.store(KEY, gTodos)
-    return savedTodo
+    if (!todo._id) return asyncService.post(KEY, todo)
+    return asyncService.put(KEY, todo)
 }
 
-
-function _add(todo) {
-    todo._id = utilService.makeId()
-    todo.createdAt = Date.now()
-    gTodos.push(todo)
-    return todo
-}
-
-function _update(todo) {
-    const idx = gTodos.findIndex(currTodo => currTodo._id === todo._id)
-    gTodos.splice(idx, 1, todo)
-    return todo
+function toggleDone(todo) {
+    return asyncService.put(KEY, todo)
 }
 
 function getEmptyTodo() {
