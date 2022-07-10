@@ -1,13 +1,11 @@
 <script setup>
 import { reactive } from 'vue';
-
 const emit = defineEmits(['setFilter'])
 
 const filterBy = reactive({
     query: '',
     filter: 'all'
 })
-
 const setFilter = () => emit('setFilter', filterBy)
 
 </script>

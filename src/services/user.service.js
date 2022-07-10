@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import { storageService } from './storage.service.js'
 import { utilService } from './utils.service.js'
 
@@ -8,8 +10,10 @@ export const userService = {
     put,
     query,
     updateUserFrefs,
-    validateUser
+    validateUser,
+
 }
+
 
 
 const gUser = storageService.load(KEY) || null
@@ -27,6 +31,7 @@ function validateUser(user) {
 
 }
 
+
 function put(username) {
     const user = JSON.parse(JSON.stringify(gUser))
     user.username = username
@@ -38,6 +43,8 @@ function updateUserFrefs(userPrefs) {
     gUser.prefs = userPrefs
     storageService.store(KEY, gUser)
 }
+
+
 
 
 

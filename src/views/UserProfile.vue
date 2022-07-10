@@ -2,30 +2,26 @@
 import { utilService } from '../services/utils.service.js'
 import TodoList from '../components/TodoList.vue';
 import { computed, reactive, ref } from 'vue';
-
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex';
+
 const route = useRoute()
 const store = useStore()
-const { state } = useStore()
+const state = useStore().state.todoStore
 
 let prefsOpen = ref(false)
 let openList = ref(false)
 
-const userTodos = computed(() => state.todos.filter(todo => todo.createdBy === route.params.username)
-)
-
-
+const userTodos = computed(() => state.todos.filter(todo => todo.createdBy === route.params.username))
 const userPrefs = reactive({
-    color: 'black',
-    bgColor: 'white'
+    color: store.getters.getUserPrefs.color,
+    bgColor: store.getters.getUserPrefs.bgColor
 })
+
 const togglePrefs = () => prefsOpen.value = !prefsOpen.value
 const setUserPrefs = () => store.commit('setUserPrefs', userPrefs)
+const timeSince = (date) => utilService.timeSince(date)
 
-function timeSince(date) {
-    return utilService.timeSince(date)
-}
 </script>
 
 

@@ -14,7 +14,7 @@ const addUser = () => {
   store.commit('addUser', user)
   user.username = ''
   user.pass = ''
-  if (!store.state.user) return
+  if (!store.state.userStore) return
   router.push('/todo')
 }
 

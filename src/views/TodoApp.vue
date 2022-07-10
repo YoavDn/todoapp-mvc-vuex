@@ -4,23 +4,23 @@ import { useStore } from 'vuex';
 import TodoList from '../components/TodoList.vue';
 import TodoFilter from '../components/TodoFilter.vue'
 import { computed } from '@vue/reactivity';
-import store from '../store/store';
 
-const { state } = useStore()
-
-
+const store = useStore()
+// const state = useStore().state.todoStore
 const filters = {
     all: todos => todos,
     completed: todos => todos.filter(todo => todo.done),
     active: todos => todos.filter(todo => !todo.done)
 }
+const filterBy = store.getters.getFilterBy
+console.log(filterBy);
 
 const filterTodos = computed(() => {
-    const regex = new RegExp(state.filterBy.query, 'i')
-    const queryFilter = state.todos.filter(todo => regex.test(todo.txt))
-    return filters[state.filterBy.filter](queryFilter)
+    const regex = new RegExp(filterBy.query, 'i')
+    const queryFilter = store.getters.getTodos.filter(todo => regex.test(todo.txt))
+    console.log(queryFilter);
+    return filters[filterBy.filter](queryFilter)
 })
-
 
 //sending to store 
 const removeTodo = (todo) => store.commit('removeTodo', todo)

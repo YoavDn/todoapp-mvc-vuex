@@ -3,18 +3,23 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex';
 const store = useStore()
 const router = useRouter()
-const user = store.state.user
+const { userStore } = store.state
+const user = store.getters.getUser
+
 
 const toUserProfile = () => {
     router.push(`/user/${user.username}`)
 }
 
+
 </script>
 
 <template>
-    <header :style="{ 'background-color': store.state.user.prefs.bgColor }" class="app-header">
-        <h2 :style="{ color: store.state.user.prefs.color }" class="logo">Todo <span v-if="user" class="username"
-                @click="toUserProfile">-{{ user.username }}</span>
+    <header :style="{ 'background-color': user.prefs.bgColor }" class=" app-header">
+        <h2 :style="{ color: user.prefs.color }" class="logo">Todo <span v-if="user.username" class="username"
+                @click="toUserProfile">-{{
+                        user.username
+                }}</span>
         </h2>
         <nav class="header-nav">
             <router-link to="/">Home</router-link>

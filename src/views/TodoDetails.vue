@@ -3,7 +3,7 @@ import { computed } from 'vue';
 
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
-const { state } = useStore()
+const state = useStore().state.todoStore
 const route = useRoute()
 const { todoId } = route.params
 const todo = computed(() => state.todos.filter(todo => todo._id === todoId))
