@@ -59,7 +59,16 @@ export const todoStore = {
         },
 
         addTodo({ commit }, { txt, todoId }) {
-            const todo = { txt: txt.value, _id: todoId, done: false }
+
+            console.log();
+            const todo = {
+                txt: txt.value,
+                _id: todoId,
+                done: false,
+                createdAt: Date.now(),
+                createdBy: userStore.state.user.username
+            }
+
             return todoService.save(todo)
                 .then(todos => {
                     commit({ type: 'saveTodo', todos })
